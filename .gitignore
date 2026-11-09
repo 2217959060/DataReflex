@@ -57,10 +57,8 @@ coverage.json
 _tmp_*.py
 _tmp_*/
 
-# Cursor：保留可共享的 rules，忽略其它本地状态
-.cursor/*
-!.cursor/rules/
-!.cursor/rules/**
+# Cursor 本地配置（不上传）
+.cursor/
 
 # Local study / handoff docs (kept on disk, not published)
 docs/INDEX.local.md
