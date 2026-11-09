@@ -1,0 +1,63 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# Node / frontend
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Logs and temp
+logs/
+*.log
+*.tmp
+*.temp
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local data and eval outputs (keep fixtures tracked under eval/datasets/)
+eval/results/
+data/
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# Coverage / scratch
+coverage.json
+_tmp_*.py
+_tmp_*/
+
+# Cursor：保留可共享的 rules，忽略其它本地状态
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**

@@ -1,0 +1,127 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-reflex"
+version = "0.1.0"
+description = "Natural language analysis over fixed structured datasets with plan-execute-self-heal."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "DataReflex" }]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "python-multipart>=0.0.9",
+    "sse-starlette>=2.1.0",
+    "langgraph>=0.2.0",
+    "langgraph-checkpoint-sqlite>=2.0.0",
+    "langchain-core>=0.3.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.6.0",
+    "openai>=1.54.0",
+    "docker>=7.1.0",
+    "sqlglot>=25.0.0",
+    "pandas>=2.2.0",
+    "openpyxl>=3.1.0",
+    "langfuse>=2.50.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-mock>=3.14.0",
+    "pytest-cov>=5.0.0",
+    "httpx>=0.27.0",
+    "ruff>=0.7.0",
+    "black>=24.10.0",
+    "mypy>=1.13.0",
+]
+
+[project.scripts]
+data-reflex = "data_reflex.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "N",   # pep8-naming
+    "SIM", # flake8-simplify
+]
+ignore = [
+    "E501",  # line length handled by Black
+    "UP009", # conventions.md requires `# -*- coding: utf-8 -*-` headers
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["data_reflex"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+mypy_path = "src"
+packages = ["data_reflex"]
+
+[[tool.mypy.overrides]]
+module = [
+    "docker.*",
+    "langfuse.*",
+    "sqlglot.*",
+    "sse_starlette.*",
+    "pandas",
+    "pandas.*",
+    "openpyxl",
+    "openpyxl.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+markers = [
+    "docker: tests that require a running Docker daemon and sandbox image",
+]
+[tool.coverage.run]
+branch = false
+source = ["src/data_reflex"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "\\.\\.\\.",
+]

@@ -1,0 +1,13 @@
+user_id,user_name,user_segment,register_date,city,phone,email
+U001,陈一,VIP,2023-01-15,上海,13800001001,chenyi@example.com
+U002,李二,老客,2023-06-20,北京,13800001002,lier@example.com
+U003,张三,新客,2025-08-01,广州,13800001003,zhangsan@example.com
+U004,赵四,老客,2024-03-12,深圳,13800001004,zhaosi@example.com
+U005,王五,VIP,2022-11-08,杭州,13800001005,wangwu@example.com
+U006,孙六,新客,2025-09-10,成都,13800001006,sunliu@example.com
+U007,周七,老客,2024-07-22,武汉,13800001007,zhouqi@example.com
+U008,吴八,VIP,2023-04-05,南京,13800001008,wuba@example.com
+U009,郑九,新客,2025-07-18,重庆,,zhengjiu@example.com
+U010,钱十,老客,2024-01-30,西安,13800001010,
+U011,冯十一,新客,2025-09-25,苏州,13800001011,feng11@example.com
+U012,陈十二,老客,2023-09-14,天津,13800001012,chen12@example.com
