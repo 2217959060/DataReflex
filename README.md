@@ -68,7 +68,7 @@ Linux / macOS 将激活命令换成 `source .venv/bin/activate`，其余同理�
 
 ## `.env` 配置
 
-将示例复制为本地配置后填写密钥（`.env` 已被 gitignore，仅保留在本地）：
+将示例复制为本地配置后填写密钥：
 
 ```powershell
 Copy-Item .env.example .env
