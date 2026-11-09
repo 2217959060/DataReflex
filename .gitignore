@@ -61,3 +61,14 @@ _tmp_*/
 .cursor/*
 !.cursor/rules/
 !.cursor/rules/**
+
+# Local study / handoff docs (kept on disk, not published)
+docs/INDEX.local.md
+docs/risk.md
+docs/tasks.md
+docs/handoff.md
+docs/roadmap.md
+docs/demo_script.md
+docs/spec.md
+docs/conventions.md
+docs/design.md

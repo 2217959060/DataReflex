@@ -24,7 +24,7 @@ LangGraph 主工作流
 SQLite（任务 / Checkpoint / 审计） + Mock 或 Docker 沙箱
 ```
 
-更细的模块与 ADR 见 [docs/design.md](docs/design.md)；字段契约见 [docs/schema.md](docs/schema.md)；默认值见 [docs/defaults.md](docs/defaults.md)。
+更细说明见 [docs/architecture.md](docs/architecture.md)；字段契约见 [docs/schema.md](docs/schema.md)；默认值见 [docs/defaults.md](docs/defaults.md)。
 
 ## 固定三表与六类问题
 
@@ -68,7 +68,7 @@ Linux / macOS 将激活命令换成 `source .venv/bin/activate`，其余同理�
 
 ## `.env` 配置
 
-复制示例并按需修改。**切勿把真实密钥写进仓库**（`.env` 已在 `.gitignore`；提交前请确认 `git status` 无 `.env`）：
+将示例复制为本地配置后填写密钥（`.env` 已被 gitignore，仅保留在本地）：
 
 ```powershell
 Copy-Item .env.example .env
@@ -91,7 +91,7 @@ Copy-Item .env.example .env
 | `LANGFUSE_PUBLIC_KEY` / `SECRET_KEY` / `HOST` | 可选观测；全空则为 no-op，不阻断主流程 |
 | `EVAL_FIXED_CLOCK` / `EVAL_TIMEZONE` | 评测固定时钟 |
 
-### 可信边界（演示前请看清）
+### 可信边界
 
 | 模式 | 结果数字含义 | 需要 |
 | --- | --- | --- |
@@ -107,7 +107,7 @@ Copy-Item .env.example .env
 # 终端 1 — API（仓库根目录）
 .\.venv\Scripts\Activate.ps1
 $env:PYTHONPATH = "src"
-# 演示请勿加 --reload（改 .env 会重启并清空进行中的任务）
+# 演示场景建议不加 --reload（热重载会中断进行中的任务）
 uvicorn data_reflex.main:app --host 127.0.0.1 --port 8001
 ```
 
@@ -117,20 +117,18 @@ cd frontend
 npm run dev
 ```
 
-**打开哪个网址（不要搞混）：**
+**访问地址：**
 
 | 地址 | 用途 |
 | --- | --- |
-| `http://127.0.0.1:5173`（或 `http://localhost:5173`） | **前端工作台**——日常演示、上传、提问都用这个 |
-| `http://127.0.0.1:8001/docs` | 后端 Swagger，可单独试 API |
-| `http://127.0.0.1:8001/` | **没有网页**，返回 JSON `404` 是正常现象（API 根路径未挂页面） |
-| `http://127.0.0.1:8001/health` | 健康检查，应返回 `{"status":"ok"}` |
+| `http://127.0.0.1:5173` | 前端工作台（上传、提问、看结果） |
+| `http://127.0.0.1:8001/docs` | 后端 OpenAPI / Swagger |
+| `http://127.0.0.1:8001/health` | 健康检查，返回 `{"status":"ok"}` |
+| `http://127.0.0.1:8001/` | API 根路径无页面，返回 404 JSON 属预期 |
 
-前端已把 `/api` 代理到 `:8001`。若改了 `vite.config.ts`，请重启 `npm run dev`。先访问 `/health` 确认是 DataReflex（返回 `{"status":"ok"}`）；若误连到其它占用端口的服务，会出现任务一直排队、`/trace` 404。
+前端将 `/api` 代理到 `:8001`。修改 `vite.config.ts` 后需重启 `npm run dev`。
 
-`data/data_reflex.db` 初始可以是空表；前端成功导入/提交任务后，再用 DB Browser 刷新才能看到行。
-
-建议首次演示：上传 `eval/datasets/fixtures/` 下 **三份 CSV**（`orders` / `returns` / `users`），提问「对比 APP 和官网 渠道销售额」，走完上传 → 提问 →（可选）计划确认 → 轨迹 / 结果表图。
+快速试用：上传 `eval/datasets/fixtures/` 下三份 CSV（`orders` / `returns` / `users`），提问「对比 APP 和官网 渠道销售额」。
 
 质量门禁（可选）：
 
@@ -177,18 +175,10 @@ python eval/run_eval.py --mode mock --max-cases 5 --strategy-matrix planner=on,o
 
 ## 文档索引
 
-日常优先看这三份即可；其余为契约深读，不必按链接扫完。
-
 | 文档 | 内容 |
 | --- | --- |
-| [CHANGELOG.md](CHANGELOG.md) | **已发布**版本记事 |
-| [docs/roadmap.md](docs/roadmap.md) | 规划中事项；含 v2 backlog 与面试优先排序 |
-| [docs/demo_script.md](docs/demo_script.md) | 15 分钟演示脚本 |
-| [docs/handoff.md](docs/handoff.md) | 交接、完成定义、进度快照 |
-| [docs/tasks.md](docs/tasks.md) | 任务清单与实现决策（T01–T45 已关门） |
+| [CHANGELOG.md](CHANGELOG.md) | 已发布版本记事 |
 | [docs/architecture.md](docs/architecture.md) | 架构总览与 ADR 摘要 |
-| [docs/spec.md](docs/spec.md) | 需求规格 |
-| [docs/design.md](docs/design.md) | 设计与 ADR 全文 |
 | [docs/schema.md](docs/schema.md) | 三表字段契约 |
 | [docs/defaults.md](docs/defaults.md) | 默认值与限额 |
 
